@@ -28,7 +28,7 @@
 		script.println("history.back()");
 		script.println("</script>");
 	}
-	else if (result == -1) { // 아이디가 없음
+	else if (result == -1) { // 아이디 없음
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('존재하지 않는 아이디입니다.')");

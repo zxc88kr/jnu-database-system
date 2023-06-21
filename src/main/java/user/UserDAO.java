@@ -36,10 +36,26 @@ public class UserDAO {
 					return 0; // 비밀번호 불일치
 				}
 			}
-			return -1; // 아이디가 없음
+			return -1; // 아이디 없음
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -2; // 데이터베이스 오류
+	}
+	
+	public int join(User user) {
+		String SQL = "INSERT INTO User VALUES (?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, user.getUserID());
+			pstmt.setString(2, user.getUserPassword());
+			pstmt.setString(3, user.getUserName());
+			pstmt.setString(4, user.getUserGender());
+			pstmt.setString(5, user.getUserEmail());
+			return pstmt.executeUpdate(); // 회원가입 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
 	}
 }

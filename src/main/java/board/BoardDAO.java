@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class BoardDAO {
 	private Connection conn;
@@ -65,5 +66,45 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		return -1; // 데이터베이스 오류
+	}
+	
+	public ArrayList<Board> getList(int pageNumber) {
+		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
+		ArrayList<Board> list = new ArrayList<Board>();
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Board board = new Board();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setBoardDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setBoardAvailable(rs.getInt(6));
+				list.add(board);
+			}
+			return list; // 게시물 불러오기 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; // 데이터베이스 오류
+	}
+	
+	public boolean IsExistPage(int pageNumber) {
+		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true; // 페이지 존재
+			}
+			return false; // 페이지 없음
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false; // 데이터베이스 오류
 	}
 }

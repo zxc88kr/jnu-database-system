@@ -92,7 +92,7 @@ public class BoardDAO {
 		return null; // 데이터베이스 오류
 	}
 	
-	public boolean IsExistPage(int pageNumber) {
+	public boolean isExistPage(int pageNumber) {
 		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);

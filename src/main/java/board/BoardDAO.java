@@ -101,10 +101,31 @@ public class BoardDAO {
 			if (rs.next()) {
 				return true; // 페이지 존재
 			}
-			return false; // 페이지 없음
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return false; // 데이터베이스 오류
+	}
+	
+	public Board getBoard(int boardID) {
+		String SQL = "SELECT * FROM Board WHERE boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Board board = new Board();
+				board.setBoardID(rs.getInt(1));
+				board.setBoardTitle(rs.getString(2));
+				board.setUserID(rs.getString(3));
+				board.setBoardDate(rs.getString(4));
+				board.setBoardContent(rs.getString(5));
+				board.setBoardAvailable(rs.getInt(6));
+				return board; // 게시물 가져오기 성공
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null; // 데이터베이스 오류
 	}
 }

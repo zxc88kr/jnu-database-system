@@ -22,7 +22,7 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword, boardAvailable FROM User WHERE userID = ?";
+		String SQL = "SELECT userPassword, adminAvailable FROM User WHERE userID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);

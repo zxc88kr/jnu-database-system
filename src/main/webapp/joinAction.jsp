@@ -38,7 +38,7 @@
 		else {
 			UserDAO userDAO = new UserDAO();
 			int result = userDAO.join(user);
-			if (result > 0) { // 회원가입 성공
+			if (result > -1) { // 회원가입 성공
 				session.setAttribute("userID", user.getUserID());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");

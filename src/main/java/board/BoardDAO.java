@@ -136,7 +136,19 @@ public class BoardDAO {
 			pstmt.setString(1, boardTitle);
 			pstmt.setString(2, boardContent);
 			pstmt.setInt(3, boardID);
-			return pstmt.executeUpdate(); // 게시물 업데이트 성공
+			return pstmt.executeUpdate(); // 게시물 수정 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
+	public int delete(int boardID) {
+		String SQL = "UPDATE Board SET boardAvailable = 0 WHERE boardID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, boardID);
+			return pstmt.executeUpdate(); // 게시물 삭제 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -35,7 +35,7 @@
 			else {
 				BoardDAO boardDAO = new BoardDAO();
 				int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
-				if (result != -1) { // 게시물 작성 성공
+				if (result > -1) { // 게시물 작성 성공
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("location.href='board.jsp'");

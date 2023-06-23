@@ -53,7 +53,7 @@
 			else {
 				BoardDAO boardDAO = new BoardDAO();
 				int result = boardDAO.update(boardID, request.getParameter("boardTitle"), request.getParameter("boardContent"));
-				if (result == -1) { // 게시물 수정 성공
+				if (result > -1) { // 게시물 수정 성공
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('게시물 수정에 실패했습니다.')");

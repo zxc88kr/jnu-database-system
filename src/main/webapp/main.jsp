@@ -81,11 +81,6 @@
 				<li data-target="#myCarousel" data-slide-to="1"></li>
 				<li data-target="#myCarousel" data-slide-to="2"></li>
 				<li data-target="#myCarousel" data-slide-to="3"></li>
-				<li data-target="#myCarousel" data-slide-to="4"></li>
-				<li data-target="#myCarousel" data-slide-to="5"></li>
-				<li data-target="#myCarousel" data-slide-to="6"></li>
-				<li data-target="#myCarousel" data-slide-to="7"></li>
-				<li data-target="#myCarousel" data-slide-to="8"></li>
 			</ol>
 			<div class="carousel-inner">
 				<div class="item active">
@@ -99,21 +94,6 @@
 				</div>
 				<div class="item">
 					<img src="images/4.jpg">
-				</div>
-				<div class="item">
-					<img src="images/5.jpg">
-				</div>
-				<div class="item">
-					<img src="images/6.jpg">
-				</div>
-				<div class="item">
-					<img src="images/7.jpg">
-				</div>
-				<div class="item">
-					<img src="images/8.jpg">
-				</div>
-				<div class="item">
-					<img src="images/9.jpg">
 				</div>
 			</div>
 			<a class="left carousel-control" href="#myCarousel" data-slide="prev">

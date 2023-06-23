@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/bootstrap.css">
+<link rel="stylesheet" href="css/custom.css">
 <title>JSP 게시판 웹 사이트</title>
 </head>
 <body>
@@ -64,6 +65,15 @@
 			%>
 		</div>
 	</nav>
+	<div class="container">
+		<div class="jumbotron">
+			<div class="container">
+				<h1>웹 사이트 소개</h1>
+				<p>부트스트랩 기반 JSP 페이지에 오신 것을 환영합니다. 임시로 구성된 테스트 페이지입니다. 만나서 반갑습니다!</p>
+				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
+			</div>
+		</div>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>

@@ -2,9 +2,7 @@
 <%@ page import="product.Product"%>
 <%@ page import="product.ProductDAO"%>
 <%@ page import="java.io.PrintWriter"%>
-<%
-request.setCharacterEncoding("UTF-8");
-%>
+<% request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,17 +45,17 @@ request.setCharacterEncoding("UTF-8");
 			ProductDAO boardDAO = new ProductDAO();
 			int result = boardDAO.delete(boardID);
 			if (result > -1) { // 게시물 삭제 성공
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("location.href='board.jsp'");
-		script.println("</script>");
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("location.href='board.jsp'");
+				script.println("</script>");
 			}
 			else { // 데이터베이스 오류
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('게시물 삭제에 실패했습니다.')");
-		script.println("history.back()");
-		script.println("</script>");
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('게시물 삭제에 실패했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
 			}
 		}
 	%>

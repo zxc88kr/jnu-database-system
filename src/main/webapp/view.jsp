@@ -49,34 +49,34 @@
 			<%
 				if (userID == null) {
 			%>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">접속하기<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-	                        <li><a href="join.jsp">회원가입</a></li>
-	                        <li><a href="login.jsp">로그인</a></li>
-	                    </ul>
-					</li>
-				</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">접속하기<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+		                        <li><a href="join.jsp">회원가입</a></li>
+		                        <li><a href="login.jsp">로그인</a></li>
+		                    </ul>
+						</li>
+					</ul>
 			<%
 				}
 				else {
 			%>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">마이페이지<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-	                        <li><a href="rent.jsp">대여이력 조회</a></li>
-	                        <li><a href="return.jsp">반납이력 조회</a></li>
-	                        <li><a href="change.jsp">개인정보 변경</a></li>
-	                        <li><a href="logoutAction.jsp">로그아웃</a></li>
-	                    </ul>
-					</li>
-				</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">마이페이지<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+		                        <li><a href="rent.jsp">대여이력 조회</a></li>
+		                        <li><a href="return.jsp">반납이력 조회</a></li>
+		                        <li><a href="change.jsp">개인정보 변경</a></li>
+		                        <li><a href="logoutAction.jsp">로그아웃</a></li>
+		                    </ul>
+						</li>
+					</ul>
 			<%
 				}
 			%>
@@ -117,8 +117,8 @@
 			<%
 				if (userID != null && userID.equals(board.getUserID())) {
 			%>
-				<a href="update.jsp?boardID=<%= boardID%>" class="btn btn-primary">수정</a>
-				<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?boardID=<%= boardID%>" class="btn btn-primary">삭제</a>
+					<a href="update.jsp?boardID=<%= boardID%>" class="btn btn-primary">수정</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?boardID=<%= boardID%>" class="btn btn-primary">삭제</a>
 			<%
 				}
 			%>

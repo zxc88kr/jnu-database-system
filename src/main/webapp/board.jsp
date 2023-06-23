@@ -46,38 +46,38 @@
 				<li class="active"><a href="board.jsp">게시판</a></li>
 			</ul>
 			<%
-			if (userID == null) {
+				if (userID == null) {
 			%>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">접속하기<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-	                        <li><a href="join.jsp">회원가입</a></li>
-	                        <li><a href="login.jsp">로그인</a></li>
-	                    </ul>
-					</li>
-				</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">접속하기<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+		                        <li><a href="join.jsp">회원가입</a></li>
+		                        <li><a href="login.jsp">로그인</a></li>
+		                    </ul>
+						</li>
+					</ul>
 			<%
-			}
-						else {
+				}
+				else {
 			%>
-				<ul class="nav navbar-nav navbar-right">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">마이페이지<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-	                        <li><a href="rent.jsp">대여이력 조회</a></li>
-	                        <li><a href="return.jsp">반납이력 조회</a></li>
-	                        <li><a href="change.jsp">개인정보 변경</a></li>
-	                        <li><a href="logoutAction.jsp">로그아웃</a></li>
-	                    </ul>
-					</li>
-				</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">마이페이지<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+		                        <li><a href="rent.jsp">대여이력 조회</a></li>
+		                        <li><a href="return.jsp">반납이력 조회</a></li>
+		                        <li><a href="change.jsp">개인정보 변경</a></li>
+		                        <li><a href="logoutAction.jsp">로그아웃</a></li>
+		                    </ul>
+						</li>
+					</ul>
 			<%
-			}
+				}
 			%>
 		</div>
 	</nav>
@@ -94,18 +94,18 @@
 				</thead>
 				<tbody>
 					<%
-					ProductDAO boardDAO = new ProductDAO();
-												ArrayList<Product> list = boardDAO.getList(pageNumber);
-												for (int i = 0; i < list.size(); i++) {
+						ProductDAO boardDAO = new ProductDAO();
+						ArrayList<Product> list = boardDAO.getList(pageNumber);
+						for (int i = 0; i < list.size(); i++) {
 					%>
-						<tr>
-							<td><%= list.get(i).getBoardID()%></td>
-							<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID()%>"><%= list.get(i).getBoardTitle()%></a></td>
-							<td><%= list.get(i).getUserID()%></td>
-							<td><%= list.get(i).getBoardDate().substring(0, 11) +
-									list.get(i).getBoardDate().substring(11, 13) + "시 " +
-									list.get(i).getBoardDate().substring(14, 16) + "분 " %></td>
-						</tr>
+							<tr>
+								<td><%= list.get(i).getBoardID()%></td>
+								<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID()%>"><%= list.get(i).getBoardTitle()%></a></td>
+								<td><%= list.get(i).getUserID()%></td>
+								<td><%= list.get(i).getBoardDate().substring(0, 11) +
+										list.get(i).getBoardDate().substring(11, 13) + "시 " +
+										list.get(i).getBoardDate().substring(14, 16) + "분 " %></td>
+							</tr>
 					<%
 						}
 					%>
@@ -114,12 +114,12 @@
 			<%
 				if (pageNumber != 1) {
 			%>
-				<a href="board.jsp?pageNumber=<%= pageNumber - 1%>" class="btn btn-success">이전</a>
+					<a href="board.jsp?pageNumber=<%= pageNumber - 1%>" class="btn btn-success">이전</a>
 			<%
 				}
 				if (boardDAO.isExistPage(pageNumber + 1)) {
 			%>
-				<a href="board.jsp?pageNumber=<%= pageNumber + 1%>" class="btn btn-success">다음</a>
+					<a href="board.jsp?pageNumber=<%= pageNumber + 1%>" class="btn btn-success">다음</a>
 			<%
 				}
 			%>

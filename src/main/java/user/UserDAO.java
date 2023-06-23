@@ -22,14 +22,17 @@ public class UserDAO {
 	}
 	
 	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword FROM User WHERE userID = ?";
+		String SQL = "SELECT userPassword, boardAvailable FROM User WHERE userID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (rs.getString(1).equals(userPassword)) {
-					return 1; // 로그인 성공
+					if (rs.getBoolean(2)) {
+						return 2; // 관리자 로그인 성공
+					}
+					return 1; // 학생 로그인 성공
 				}
 				return 0; // 비밀번호 불일치
 			}

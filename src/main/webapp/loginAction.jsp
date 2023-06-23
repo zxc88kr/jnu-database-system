@@ -26,8 +26,17 @@
 		}
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
-		if (result == 1) { // 로그인 성공
+		if (result == 2) { // 관리자 로그인 성공
 			session.setAttribute("userID", user.getUserID());
+			session.setAttribute("adminAvailable", true);
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("location.href='main.jsp'");
+			script.println("</script>");
+		}
+		else if (result == 1) { // 학생 로그인 성공
+			session.setAttribute("userID", user.getUserID());
+			session.setAttribute("adminAvailable", false);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href='main.jsp'");

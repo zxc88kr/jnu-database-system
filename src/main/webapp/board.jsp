@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="board.Board"%>
-<%@ page import="board.BoardDAO"%>
+<%@ page import="product.Product"%>
+<%@ page import="product.ProductDAO"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
@@ -46,7 +46,7 @@
 				<li class="active"><a href="board.jsp">게시판</a></li>
 			</ul>
 			<%
-				if (userID == null) {
+			if (userID == null) {
 			%>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
@@ -60,8 +60,8 @@
 					</li>
 				</ul>
 			<%
-				}
-				else {
+			}
+						else {
 			%>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
@@ -77,7 +77,7 @@
 					</li>
 				</ul>
 			<%
-				}
+			}
 			%>
 		</div>
 	</nav>
@@ -94,9 +94,9 @@
 				</thead>
 				<tbody>
 					<%
-						BoardDAO boardDAO = new BoardDAO();
-						ArrayList<Board> list = boardDAO.getList(pageNumber);
-						for (int i = 0; i < list.size(); i++) {
+					ProductDAO boardDAO = new ProductDAO();
+												ArrayList<Product> list = boardDAO.getList(pageNumber);
+												for (int i = 0; i < list.size(); i++) {
 					%>
 						<tr>
 							<td><%= list.get(i).getBoardID()%></td>

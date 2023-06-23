@@ -1,4 +1,4 @@
-package board;
+package product;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,11 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class BoardDAO {
+public class ProductDAO {
 	private Connection conn;
 	private ResultSet rs;
 	
-	public BoardDAO() {
+	public ProductDAO() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			String dbURL = "jdbc:mysql://localhost:3306/test";
@@ -68,15 +68,15 @@ public class BoardDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public ArrayList<Board> getList(int pageNumber) {
+	public ArrayList<Product> getList(int pageNumber) {
 		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
-		ArrayList<Board> list = new ArrayList<Board>();
+		ArrayList<Product> list = new ArrayList<Product>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Board board = new Board();
+				Product board = new Product();
 				board.setBoardID(rs.getInt(1));
 				board.setBoardTitle(rs.getString(2));
 				board.setUserID(rs.getString(3));
@@ -107,14 +107,14 @@ public class BoardDAO {
 		return false; // 데이터베이스 오류
 	}
 	
-	public Board getBoard(int boardID) {
+	public Product getBoard(int boardID) {
 		String SQL = "SELECT * FROM Board WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, boardID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				Board board = new Board();
+				Product board = new Product();
 				board.setBoardID(rs.getInt(1));
 				board.setBoardTitle(rs.getString(2));
 				board.setUserID(rs.getString(3));

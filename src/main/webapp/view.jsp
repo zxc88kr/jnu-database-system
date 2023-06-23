@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="board.Board"%>
-<%@ page import="board.BoardDAO"%>
+<%@ page import="product.Product"%>
+<%@ page import="product.ProductDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,7 @@
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Board board = new BoardDAO().getBoard(boardID);
+		Product board = new ProductDAO().getBoard(boardID);
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">

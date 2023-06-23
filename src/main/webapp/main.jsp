@@ -78,7 +78,7 @@
 			<div class="container">
 				<h1>총학생회 물품대여 사업</h1>
 				<p>총학생회가 빌려드립니다! 중심과 함께 봉플을 더욱 즐겁게! 대학생활을 더욱 편리하게!</p>
-				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
+				<p><a class="btn btn-primary btn-pull" href="https://pf.kakao.com/_fdxmkxj" target="_blank" role="button">자세히 알아보기</a></p>
 			</div>
 		</div>
 	</div>

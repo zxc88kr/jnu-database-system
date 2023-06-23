@@ -58,8 +58,8 @@
                     </div>
                     <div class="form-group" style="text-align:center;">
                         <div class="btn-group" data-toggle="buttons">
-                        	<label class="btn btn-primary">
-                        		<input type="radio" name="adminAvailable" autocomplete="off" value="false">학생
+                        	<label class="btn btn-primary active">
+                        		<input type="radio" name="adminAvailable" autocomplete="off" value="false" checked>학생
                         	</label>
                         	<label class="btn btn-primary">
                         		<input type="radio" name="adminAvailable" autocomplete="off" value="true">관리자

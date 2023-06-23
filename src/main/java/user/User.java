@@ -4,8 +4,8 @@ public class User {
 	private String userID;
 	private String userPassword;
 	private String userName;
-	private String userGender;
-	private String userEmail;
+	private String userContact;
+	private Boolean adminAvailable;
 	
 	public String getUserID() {
 		return userID;
@@ -25,16 +25,16 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getUserGender() {
-		return userGender;
+	public String getUserContact() {
+		return userContact;
 	}
-	public void setUserGender(String userGender) {
-		this.userGender = userGender;
+	public void setUserContact(String userContact) {
+		this.userContact = userContact;
 	}
-	public String getUserEmail() {
-		return userEmail;
+	public Boolean getAdminAvailable() {
+		return adminAvailable;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setAdminAvailable(Boolean adminAvailable) {
+		this.adminAvailable = adminAvailable;
 	}
 }

@@ -68,8 +68,8 @@
 	<div class="container">
 		<div class="jumbotron">
 			<div class="container">
-				<h1>웹 사이트 소개</h1>
-				<p>부트스트랩 기반 JSP 페이지에 오신 것을 환영합니다. 임시로 구성된 테스트 페이지입니다. 만나서 반갑습니다!</p>
+				<h1>총학생회 물품대여 사업</h1>
+				<p>총학생회가 빌려드립니다! 중심과 함께 봉플을 더욱 즐겁게! 대학생활을 더욱 편리하게!</p>
 				<p><a class="btn btn-primary btn-pull" href="#" role="button">자세히 알아보기</a></p>
 			</div>
 		</div>

@@ -54,8 +54,11 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">회원관리<span class="caret"></span></a>
+						aria-expanded="false">마이페이지<span class="caret"></span></a>
 						<ul class="dropdown-menu">
+	                        <li><a href="rent.jsp">대여이력 조회</a></li>
+	                        <li><a href="return.jsp">반납이력 조회</a></li>
+	                        <li><a href="change.jsp">개인정보 변경</a></li>
 	                        <li><a href="logoutAction.jsp">로그아웃</a></li>
 	                    </ul>
 					</li>

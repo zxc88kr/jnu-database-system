@@ -12,8 +12,8 @@
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"
-                data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                aria-expanded="false">
+			data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+			aria-expanded="false">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -39,12 +39,41 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4" style="text-align: center;">
-			<p><a class="btn btn-primary btn-pull" href="joinUser.jsp" role="button">학생 회원가입</a></p>
-			<p><a class="btn btn-primary btn-pull" href="joinManager.jsp" role="button">관리자 회원가입</a></p>
-		</div>
-		<div class="col-lg-4"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4">
+            <div class ="jumbotron" style="padding-top:20px;">
+                <form method="post" action="joinAction.jsp">
+                    <h3 style="text-align:center;">회원가입</h3>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="비밀번호" name="userPassword" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="연락처 (01012345678)" name="userContact" maxlength="11">
+                    </div>
+                    <div class="form-group" style="text-align:center;">
+                        <div class="btn-group" data-toggle="buttons">
+                        	<label class="btn btn-primary">
+                        		<input type="radio" name="adminAvailable" autocomplete="off" value="false">학생
+                        	</label>
+                        	<label class="btn btn-primary">
+                        		<input type="radio" name="adminAvailable" autocomplete="off" value="true">관리자
+                        	</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="인증코드" name="authCode" maxlength="10">
+                    </div>
+                    <input type="submit" class="btn btn-primary form-control" value="회원가입">
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4"></div>
     </div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>

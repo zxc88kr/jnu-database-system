@@ -8,6 +8,14 @@
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
 <title>물품 대여/기증 웹 사이트</title>
+<style type="text/css">
+	body {
+		-ms-overflow-style: none;
+	}
+	::-webkit-scrollbar {
+		display: none;
+	}
+</style>
 </head>
 <body>
 	<%

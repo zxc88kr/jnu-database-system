@@ -89,8 +89,7 @@
 				<tbody>
 					<tr>
 						<td style="width: 20%;">글 제목</td>
-						<td colspan="2"><%= board.getBoardTitle().replaceAll(" ", "&nbsp;")
-						.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						<td colspan="2"><%= board.getBoardTitle()%></td>
 					</tr>
 					<tr>
 						<td>작성자</td>

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>물품 대여/기증 웹 사이트</title>
+<title>물품 대여/반납 웹 사이트</title>
 </head>
 <body>
 	<%

@@ -22,19 +22,19 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
-		int boardID = 0;
-		if (request.getParameter("boardID") != null) {
-			boardID = Integer.parseInt(request.getParameter("boardID"));
+		int productID = 0;
+		if (request.getParameter("productID") != null) {
+			productID = Integer.parseInt(request.getParameter("productID"));
 		}
-		if (boardID == 0) {
+		if (productID == 0) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('존재하지 않는 게시물입니다.')");
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Product board = new ProductDAO().getBoard(boardID);
-		if (!userID.equals(board.getUserID())) {
+		Product product = new ProductDAO().getProduct(productID);
+		if (!(Boolean)session.getAttribute("adminAvailable")) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");
@@ -42,8 +42,7 @@
 			script.println("</script>");
 		}
 		else {
-			if (request.getParameter("boardTitle") == null || request.getParameter("boardContent") == null ||
-			request.getParameter("boardTitle").equals("") || request.getParameter("boardContent").equals("")) {
+			if (request.getParameter("productName") == null || request.getParameter("productCount") == null || request.getParameter("productDeposit") == null) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('입력이 안 된 사항이 있습니다.')");
@@ -51,9 +50,10 @@
 				script.println("</script>");
 			}
 			else {
-				ProductDAO boardDAO = new ProductDAO();
-				int result = boardDAO.update(boardID, request.getParameter("boardTitle"), request.getParameter("boardContent"));
-				if (result > -1) { // 게시물 수정 성공
+				ProductDAO productDAO = new ProductDAO();
+				int result = productDAO.update(productID, request.getParameter("productName"),
+				Integer.parseInt(request.getParameter("productCount")), Integer.parseInt(request.getParameter("productDeposit")));
+				if (result > -1) { // 물품 수정 성공
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("location.href='board.jsp'");
@@ -62,7 +62,7 @@
 				else { // 데이터베이스 오류
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
-					script.println("alert('게시물 수정에 실패했습니다.')");
+					script.println("alert('물품 수정에 실패했습니다.')");
 					script.println("history.back()");
 					script.println("</script>");
 				}

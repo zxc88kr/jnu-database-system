@@ -17,18 +17,18 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String)session.getAttribute("userID");
 		}
-		int boardID = 0;
-		if (request.getParameter("boardID") != null) {
-			boardID = Integer.parseInt(request.getParameter("boardID"));
+		int productID = 0;
+		if (request.getParameter("productID") != null) {
+			productID = Integer.parseInt(request.getParameter("productID"));
 		}
-		if (boardID == 0) {
+		if (productID == 0) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('존재하지 않는 게시물입니다.')");
+			script.println("alert('존재하지 않는 물품입니다.')");
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Product board = new ProductDAO().getBoard(boardID);
+		Product product = new ProductDAO().getProduct(productID);
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -87,38 +87,38 @@
 			<table class="table table-striped" style="text-align:center; border:1px solid #dddddd;">
 				<thead>
 					<tr>
-						<th colspan="3" style="background-color:#eeeeee; text-align:center;">게시판 글보기</th>
+						<th colspan="3" style="background-color:#eeeeee; text-align:center;">물품 정보</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width: 20%;">글 제목</td>
-						<td colspan="2"><%= board.getBoardTitle()%></td>
+						<td style="width: 20%;">물품번호</td>
+						<td colspan="2"><%= product.getProductID()%></td>
 					</tr>
 					<tr>
-						<td>작성자</td>
-						<td colspan="2"><%= board.getUserID()%></td>
+						<td>물품명</td>
+						<td colspan="2"><%= product.getProductName()%></td>
 					</tr>
 					<tr>
-						<td>작성일</td>
-						<td colspan="2"><%= board.getBoardDate().substring(0, 11) +
-						board.getBoardDate().substring(11, 13) + "시 " +
-						board.getBoardDate().substring(14, 16) + "분 "%></td>
+						<td>수량</td>
+						<td colspan="2"><%= product.getProductCount()%></td>
 					</tr>
 					<tr>
-						<td>내용</td>
-						<td colspan="2" style="min-height: 200px; text-align: left;">
-						<%= board.getBoardContent().replaceAll(" ", "&nbsp;")
-						.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n", "<br>")%></td>
+						<td>보증금</td>
+						<td colspan="2"><%= product.getProductDeposit()%></td>
+					</tr>
+					<tr>
+						<td>상태</td>
+						<td colspan="2"><%= product.getRentAvailable()%></td>
 					</tr>
 				</tbody>
 			</table>
 			<a href="board.jsp" class="btn btn-primary">목록</a>
 			<%
-				if (userID != null && userID.equals(board.getUserID())) {
+				if (userID != null && (Boolean)session.getAttribute("adminAvailable")) {
 			%>
-					<a href="update.jsp?boardID=<%= boardID%>" class="btn btn-primary">수정</a>
-					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?boardID=<%= boardID%>" class="btn btn-primary">삭제</a>
+					<a href="update.jsp?productID=<%= productID%>" class="btn btn-primary">수정</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?productID=<%= productID%>" class="btn btn-primary">삭제</a>
 			<%
 				}
 			%>

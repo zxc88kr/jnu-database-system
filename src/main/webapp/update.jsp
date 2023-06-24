@@ -24,19 +24,19 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
-		int boardID = 0;
-		if (request.getParameter("boardID") != null) {
-			boardID = Integer.parseInt(request.getParameter("boardID"));
+		int productID = 0;
+		if (request.getParameter("productID") != null) {
+			productID = Integer.parseInt(request.getParameter("productID"));
 		}
-		if (boardID == 0) {
+		if (productID == 0) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('존재하지 않는 게시물입니다.')");
+			script.println("alert('존재하지 않는 물품입니다.')");
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Product board = new ProductDAO().getBoard(boardID);
-		if (!userID.equals(board.getUserID())) {
+		Product product = new ProductDAO().getProduct(productID);
+		if (!(Boolean)session.getAttribute("adminAvailable")) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('권한이 없습니다.')");
@@ -77,23 +77,26 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<form method="post" action="updateAction.jsp?boardID=<%= boardID%>">
+			<form method="post" action="updateAction.jsp?productID=<%= productID%>">
 				<table class="table table-striped" style="text-align:center; border:1px solid #dddddd;">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color:#eeeeee; text-align:center;">게시판 글수정 양식</th>
+							<th colspan="2" style="background-color:#eeeeee; text-align:center;">물품 수정</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50" value="<%= board.getBoardTitle()%>"></td>
+							<td><input type="text" class="form-control" placeholder="물품명" name="productName" maxlength="20" value="<%= product.getProductName()%>"></td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글 내용" name="boardContent" maxlength="2048" style="height:350px;"><%= board.getBoardContent()%></textarea></td>
+							<td><input type="number" class="form-control" placeholder="수량" name="productCount" value="<%= product.getProductCount()%>"></td>
+						</tr>
+						<tr>
+							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit" value="<%= product.getProductDeposit()%>"></td>
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="글 수정">
+				<input type="submit" class="btn btn-primary pull-right" value="완료">
 			</form>
 		</div>
 	</div>

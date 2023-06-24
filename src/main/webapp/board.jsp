@@ -86,25 +86,36 @@
 			<table class="table table-striped" style="text-align:center; border:1px solid #dddddd;">
 				<thead>
 					<tr>
-						<th style="background-color:#eeeeee; text-align:center;">번호</th>
-						<th style="background-color:#eeeeee; text-align:center;">제목</th>
-						<th style="background-color:#eeeeee; text-align:center;">작성자</th>
-						<th style="background-color:#eeeeee; text-align:center;">작성일</th>
+						<th style="background-color:#eeeeee; text-align:center;">물품번호</th>
+						<th style="background-color:#eeeeee; text-align:center;">물품명</th>
+						<th style="background-color:#eeeeee; text-align:center;">수량</th>
+						<th style="background-color:#eeeeee; text-align:center;">보증금</th>
+						<th style="background-color:#eeeeee; text-align:center;">상태</th>
 					</tr>
 				</thead>
 				<tbody>
 					<%
-						ProductDAO boardDAO = new ProductDAO();
-						ArrayList<Product> list = boardDAO.getList(pageNumber);
+						ProductDAO productDAO = new ProductDAO();
+						ArrayList<Product> list = productDAO.getList(pageNumber);
 						for (int i = 0; i < list.size(); i++) {
 					%>
 							<tr>
-								<td><%= list.get(i).getBoardID()%></td>
-								<td><a href="view.jsp?boardID=<%= list.get(i).getBoardID()%>"><%= list.get(i).getBoardTitle()%></a></td>
-								<td><%= list.get(i).getUserID()%></td>
-								<td><%= list.get(i).getBoardDate().substring(0, 11) +
-										list.get(i).getBoardDate().substring(11, 13) + "시 " +
-										list.get(i).getBoardDate().substring(14, 16) + "분 " %></td>
+								<td><%= list.get(i).getProductID()%></td>
+								<td><a href="view.jsp?productID=<%= list.get(i).getProductID()%>"><%= list.get(i).getProductName()%></a></td>
+								<td><%= list.get(i).getProductCount()%></td>
+								<td><%= list.get(i).getProductDeposit()%></td>
+								<%
+									if (list.get(i).getRentAvailable()) {
+								%>
+										<td>대여 가능</td>
+								<%
+									}
+									else {
+								%>
+										<td>대여 불가능</td>
+								<%
+									}
+								%>
 							</tr>
 					<%
 						}
@@ -117,7 +128,7 @@
 					<a href="board.jsp?pageNumber=<%= pageNumber - 1%>" class="btn btn-success">이전</a>
 			<%
 				}
-				if (boardDAO.isExistPage(pageNumber + 1)) {
+				if (productDAO.isExistPage(pageNumber + 1)) {
 			%>
 					<a href="board.jsp?pageNumber=<%= pageNumber + 1%>" class="btn btn-success">다음</a>
 			<%

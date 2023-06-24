@@ -15,6 +15,13 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String)session.getAttribute("userID");
 		}
+		if (userID == null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인이 되어있지 않습니다.')");
+			script.println("location.href='login.jsp'");
+			script.println("</script>");
+		}
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -74,19 +81,22 @@
 				<table class="table table-striped" style="text-align:center; border:1px solid #dddddd;">
 					<thead>
 						<tr>
-							<th colspan="2" style="background-color:#eeeeee; text-align:center;">게시판 글쓰기 양식</th>
+							<th colspan="2" style="background-color:#eeeeee; text-align:center;">물품 추가</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="text" class="form-control" placeholder="글 제목" name="boardTitle" maxlength="50"></td>
+							<td><input type="text" class="form-control" placeholder="물품명" name="productName" maxlength="20"></td>
 						</tr>
 						<tr>
-							<td><textarea class="form-control" placeholder="글 내용" name="boardContent" maxlength="2048" style="height:350px;"></textarea></td>
+							<td><input type="number" class="form-control" placeholder="수량" name="productCount"></td>
+						</tr>
+						<tr>
+							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit"></td>
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-primary pull-right" value="글 작성">
+				<input type="submit" class="btn btn-primary pull-right" value="완료">
 			</form>
 		</div>
 	</div>

@@ -13,7 +13,7 @@ public class ProductDAO {
 	public ProductDAO() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			String dbURL = "jdbc:mysql://localhost:3306/test";
+			String dbURL = "jdbc:mysql://localhost:3306/chan";
 			String dbID = "root";
 			String dbPassword = "1234";
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
@@ -37,31 +37,30 @@ public class ProductDAO {
 	}
 	
 	public int getNext() {
-		String SQL = "SELECT boardID FROM Board ORDER BY boardID DESC";
+		String SQL = "SELECT productID FROM Product ORDER BY productID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getInt(1) + 1; // 질의 성공
 			}
-			return 1; // 첫 번째 게시물
+			return 1; // 첫 번째 물품
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int write(String boardTitle, String userID, String boardContent) {
-		String SQL = "INSERT INTO Board VALUES (?, ?, ?, ?, ?, ?)";
+	public int write(String productName, int productCount, int productDeposit) {
+		String SQL = "INSERT INTO Product VALUES (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
-			pstmt.setString(2, boardTitle);
-			pstmt.setString(3, userID);
-			pstmt.setString(4, getDate());
-			pstmt.setString(5, boardContent);
-			pstmt.setInt(6, 1);
-			return pstmt.executeUpdate(); // 게시물 작성 성공
+			pstmt.setString(2, productName);
+			pstmt.setInt(3, productCount);
+			pstmt.setInt(4, productDeposit);
+			pstmt.setBoolean(5, true);
+			return pstmt.executeUpdate(); // 물품 추가 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,23 +68,22 @@ public class ProductDAO {
 	}
 	
 	public ArrayList<Product> getList(int pageNumber) {
-		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1 ORDER BY boardID DESC LIMIT 10";
+		String SQL = "SELECT * FROM Product WHERE productID < ? AND rentAvailable = true ORDER BY productID DESC LIMIT 10";
 		ArrayList<Product> list = new ArrayList<Product>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Product board = new Product();
-				board.setBoardID(rs.getInt(1));
-				board.setBoardTitle(rs.getString(2));
-				board.setUserID(rs.getString(3));
-				board.setBoardDate(rs.getString(4));
-				board.setBoardContent(rs.getString(5));
-				board.setBoardAvailable(rs.getInt(6));
-				list.add(board);
+				Product product = new Product();
+				product.setProductID(rs.getInt(1));
+				product.setProductName(rs.getString(2));
+				product.setProductCount(rs.getInt(3));
+				product.setProductDeposit(rs.getInt(4));
+				product.setRentAvailable(rs.getBoolean(5));
+				list.add(product);
 			}
-			return list; // 게시물 불러오기 성공
+			return list; // 물품목록 가져오기 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +91,7 @@ public class ProductDAO {
 	}
 	
 	public boolean isExistPage(int pageNumber) {
-		String SQL = "SELECT * FROM Board WHERE boardID < ? AND boardAvailable = 1";
+		String SQL = "SELECT * FROM Product WHERE productID < ? AND rentAvailable = true";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
@@ -107,21 +105,20 @@ public class ProductDAO {
 		return false; // 데이터베이스 오류
 	}
 	
-	public Product getBoard(int boardID) {
-		String SQL = "SELECT * FROM Board WHERE boardID = ?";
+	public Product getProduct(int productID) {
+		String SQL = "SELECT * FROM Product WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, boardID);
+			pstmt.setInt(1, productID);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				Product board = new Product();
-				board.setBoardID(rs.getInt(1));
-				board.setBoardTitle(rs.getString(2));
-				board.setUserID(rs.getString(3));
-				board.setBoardDate(rs.getString(4));
-				board.setBoardContent(rs.getString(5));
-				board.setBoardAvailable(rs.getInt(6));
-				return board; // 게시물 가져오기 성공
+				Product product = new Product();
+				product.setProductID(rs.getInt(1));
+				product.setProductName(rs.getString(2));
+				product.setProductCount(rs.getInt(3));
+				product.setProductDeposit(rs.getInt(4));
+				product.setRentAvailable(rs.getBoolean(5));
+				return product; // 물품 가져오기 성공
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -129,26 +126,27 @@ public class ProductDAO {
 		return null; // 데이터베이스 오류
 	}
 	
-	public int update(int boardID, String boardTitle, String boardContent) {
-		String SQL = "UPDATE Board SET boardTitle = ?, boardContent = ? WHERE boardID = ?";
+	public int update(int productID, String productName, int productCount, int productDeposit) {
+		String SQL = "UPDATE Product SET productName = ?, productCount = ?, productDeposit = ? WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, boardTitle);
-			pstmt.setString(2, boardContent);
-			pstmt.setInt(3, boardID);
-			return pstmt.executeUpdate(); // 게시물 수정 성공
+			pstmt.setString(1, productName);
+			pstmt.setInt(2, productCount);
+			pstmt.setInt(3, productDeposit);
+			pstmt.setInt(4, productID);
+			return pstmt.executeUpdate(); // 물품 수정 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int delete(int boardID) {
-		String SQL = "UPDATE Board SET boardAvailable = 0 WHERE boardID = ?";
+	public int delete(int productID) {
+		String SQL = "DELETE FROM Product WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, boardID);
-			return pstmt.executeUpdate(); // 게시물 삭제 성공
+			pstmt.setInt(1, productID);
+			return pstmt.executeUpdate(); // 물품 삭제 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

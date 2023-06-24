@@ -2,9 +2,10 @@
 <%@ page import="product.ProductDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 <% request.setCharacterEncoding("UTF-8");%>
-<jsp:useBean id="board" class="board.Board" scope="page"/>
-<jsp:setProperty name="board" property="boardTitle"/>
-<jsp:setProperty name="board" property="boardContent"/>
+<jsp:useBean id="product" class="product.Product" scope="page"/>
+<jsp:setProperty name="product" property="productName"/>
+<jsp:setProperty name="product" property="productCount"/>
+<jsp:setProperty name="product" property="productDeposit"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,7 @@
 			script.println("</script>");
 		}
 		else {
-			if (board.getBoardTitle() == null || board.getBoardContent() == null) {
+			if (product.getProductName() == null || (Integer)product.getProductCount() == null || (Integer)product.getProductDeposit() == null) {
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('입력이 안 된 사항이 있습니다.')");
@@ -33,9 +34,9 @@
 				script.println("</script>");
 			}
 			else {
-				ProductDAO boardDAO = new ProductDAO();
-				int result = boardDAO.write(board.getBoardTitle(), userID, board.getBoardContent());
-				if (result > -1) { // 게시물 작성 성공
+				ProductDAO productDAO = new ProductDAO();
+				int result = productDAO.write(product.getProductName(), product.getProductCount(), product.getProductDeposit());
+				if (result > -1) { // 물품 추가 성공
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("location.href='board.jsp'");
@@ -44,7 +45,7 @@
 				else { // 데이터베이스 오류
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
-					script.println("alert('게시물 작성에 실패했습니다.')");
+					script.println("alert('물품 추가에 실패했습니다.')");
 					script.println("history.back()");
 					script.println("</script>");
 				}

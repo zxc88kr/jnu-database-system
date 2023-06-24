@@ -21,28 +21,6 @@ public class UserDAO {
 		}
 	}
 	
-	public int login(String userID, String userPassword) {
-		String SQL = "SELECT userPassword, adminAvailable FROM User WHERE userID = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				if (rs.getString(1).equals(userPassword)) {
-					if (rs.getBoolean(2)) {
-						return 2; // 관리자 로그인 성공
-					}
-					return 1; // 학생 로그인 성공
-				}
-				return 0; // 비밀번호 불일치
-			}
-			return -1; // 아이디 없음
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -2; // 데이터베이스 오류
-	}
-	
 	public int auth(String authCode, Boolean adminAvailable) {
 		String SQL = "SELECT * FROM Auth WHERE authCode = ? AND adminAvailable = ?";
 		try {
@@ -73,6 +51,28 @@ public class UserDAO {
 				return pstmt.executeUpdate(); // 회원가입 성공
 			}
 			return -1; // 인증번호 불일치
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -2; // 데이터베이스 오류
+	}
+	
+	public int login(String userID, String userPassword) {
+		String SQL = "SELECT userPassword, adminAvailable FROM User WHERE userID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (rs.getString(1).equals(userPassword)) {
+					if (rs.getBoolean(2)) {
+						return 2; // 관리자 로그인 성공
+					}
+					return 1; // 학생 로그인 성공
+				}
+				return 0; // 비밀번호 불일치
+			}
+			return -1; // 아이디 없음
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

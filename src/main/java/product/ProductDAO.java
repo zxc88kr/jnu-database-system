@@ -51,20 +51,25 @@ public class ProductDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int write(String productName, int productCount, int productDeposit) {
-		String SQL = "INSERT INTO Product VALUES (?, ?, ?, ?, ?)";
+	public Product getProduct(int productID) {
+		String SQL = "SELECT * FROM Product WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
-			pstmt.setString(2, productName);
-			pstmt.setInt(3, productCount);
-			pstmt.setInt(4, productDeposit);
-			pstmt.setBoolean(5, true);
-			return pstmt.executeUpdate(); // 물품 추가 성공
+			pstmt.setInt(1, productID);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Product product = new Product();
+				product.setProductID(rs.getInt(1));
+				product.setProductName(rs.getString(2));
+				product.setProductCount(rs.getInt(3));
+				product.setProductDeposit(rs.getInt(4));
+				product.setRentAvailable(rs.getBoolean(5));
+				return product; // 물품 가져오기 성공
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1; // 데이터베이스 오류
+		return null; // 데이터베이스 오류
 	}
 	
 	public ArrayList<Product> getList(int pageNumber, Boolean adminAvailable) {
@@ -111,25 +116,20 @@ public class ProductDAO {
 		return false; // 데이터베이스 오류
 	}
 	
-	public Product getProduct(int productID) {
-		String SQL = "SELECT * FROM Product WHERE productID = ?";
+	public int write(String productName, int productCount, int productDeposit) {
+		String SQL = "INSERT INTO Product VALUES (?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, productID);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				Product product = new Product();
-				product.setProductID(rs.getInt(1));
-				product.setProductName(rs.getString(2));
-				product.setProductCount(rs.getInt(3));
-				product.setProductDeposit(rs.getInt(4));
-				product.setRentAvailable(rs.getBoolean(5));
-				return product; // 물품 가져오기 성공
-			}
+			pstmt.setInt(1, getNext());
+			pstmt.setString(2, productName);
+			pstmt.setInt(3, productCount);
+			pstmt.setInt(4, productDeposit);
+			pstmt.setBoolean(5, true);
+			return pstmt.executeUpdate(); // 물품 추가 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null; // 데이터베이스 오류
+		return -1; // 데이터베이스 오류
 	}
 	
 	public int update(int productID, String productName, int productCount, int productDeposit, Boolean rentAvailable) {

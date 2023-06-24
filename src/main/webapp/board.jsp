@@ -147,8 +147,12 @@
 					<a href="board.jsp?pageNumber=<%= pageNumber + 1%>" class="btn btn-success">다음</a>
 			<%
 				}
+				if (adminAvailable) {
 			%>
-			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+					<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>

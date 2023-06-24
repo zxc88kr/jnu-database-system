@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.io.PrintWriter"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,19 @@
 <title>물품 대여/반납 웹 사이트</title>
 </head>
 <body>
+	<%
+		String userID = null;
+		if (session.getAttribute("userID") != null) {
+			userID = (String)session.getAttribute("userID");
+		}
+		if (userID != null) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인되어 있습니다.')");
+			script.println("location.href='main.jsp'");
+			script.println("</script>");
+		}
+	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed"

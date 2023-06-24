@@ -13,8 +13,11 @@
 <title>물품 대여/반납 웹 사이트</title>
 <style type="text/css">
 	a, a:hover {
-		color: #000000;
+		color: #d9534f;
 		text-decoration: none;
+	}
+	td:nth-child(2) {
+		font-weight: bold;
 	}
 </style>
 </head>

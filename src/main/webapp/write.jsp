@@ -59,6 +59,13 @@
                         <li><a href="rent.jsp">대여이력 조회</a></li>
                         <li><a href="return.jsp">반납이력 조회</a></li>
                         <li><a href="change.jsp">개인정보 변경</a></li>
+                        <%
+                        	if (adminAvailable) {
+                        %>
+                        		<li><a href="auth.jsp">인증코드 관리</a></li>
+                        <%
+							}
+                        %>
                         <li><a href="logoutAction.jsp">로그아웃</a></li>
                     </ul>
 				</li>

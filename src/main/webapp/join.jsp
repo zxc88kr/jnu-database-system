@@ -57,7 +57,7 @@
                         <input type="text" class="form-control" placeholder="연락처 (01012345678)" name="userContact" maxlength="11">
                     </div>
                     <div class="form-group" style="text-align:center;">
-                        <div class="btn-group" data-toggle="buttons">
+                        <div class="btn-group btn-group-justified" data-toggle="buttons">
                         	<label class="btn btn-primary active">
                         		<input type="radio" name="adminAvailable" autocomplete="off" value="false" checked>학생
                         	</label>

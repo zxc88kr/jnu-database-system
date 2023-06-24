@@ -67,12 +67,15 @@ public class ProductDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public ArrayList<Product> getList(int pageNumber) {
-		String SQL = "SELECT * FROM Product WHERE productID < ? AND rentAvailable = true ORDER BY productID DESC LIMIT 10";
+	public ArrayList<Product> getList(int pageNumber, Boolean adminAvailable) {
+		String SQL = "SELECT * FROM Product WHERE rentAvailable = true ORDER BY productID DESC LIMIT 10 OFFSET ?";
+		if (adminAvailable) {
+			SQL = "SELECT * FROM Product ORDER BY productID DESC LIMIT 10 OFFSET ?";
+		}
 		ArrayList<Product> list = new ArrayList<Product>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
@@ -90,11 +93,14 @@ public class ProductDAO {
 		return null; // 데이터베이스 오류
 	}
 	
-	public boolean isExistPage(int pageNumber) {
-		String SQL = "SELECT * FROM Product WHERE productID < ? AND rentAvailable = true";
+	public boolean isExistPage(int pageNumber, Boolean adminAvailable) {
+		String SQL = "SELECT * FROM Product WHERE rentAvailable = true LIMIT 10 OFFSET ?";
+		if (adminAvailable) {
+			SQL = "SELECT * FROM Product LIMIT 10 OFFSET ?";
+		}
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, (pageNumber - 1) * 10);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return true; // 페이지 존재
@@ -126,14 +132,15 @@ public class ProductDAO {
 		return null; // 데이터베이스 오류
 	}
 	
-	public int update(int productID, String productName, int productCount, int productDeposit) {
-		String SQL = "UPDATE Product SET productName = ?, productCount = ?, productDeposit = ? WHERE productID = ?";
+	public int update(int productID, String productName, int productCount, int productDeposit, Boolean rentAvailable) {
+		String SQL = "UPDATE Product SET productName = ?, productCount = ?, productDeposit = ?, rentAvailable = ? WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, productName);
 			pstmt.setInt(2, productCount);
 			pstmt.setInt(3, productDeposit);
-			pstmt.setInt(4, productID);
+			pstmt.setBoolean(4, rentAvailable);
+			pstmt.setInt(5, productID);
 			return pstmt.executeUpdate(); // 물품 수정 성공
 		} catch (Exception e) {
 			e.printStackTrace();

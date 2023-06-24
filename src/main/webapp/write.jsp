@@ -22,6 +22,17 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
+		if (!adminAvailable) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -39,40 +50,19 @@
 				<li><a href="main.jsp">메인</a></li>
 				<li class="active"><a href="board.jsp">게시판</a></li>
 			</ul>
-			<%
-				if (userID == null) {
-			%>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">접속하기<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-		                        <li><a href="join.jsp">회원가입</a></li>
-		                        <li><a href="login.jsp">로그인</a></li>
-		                    </ul>
-						</li>
-					</ul>
-			<%
-				}
-				else {
-			%>
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" role="button" aria-haspopup="true"
-							aria-expanded="false">마이페이지<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-		                        <li><a href="rent.jsp">대여이력 조회</a></li>
-		                        <li><a href="return.jsp">반납이력 조회</a></li>
-		                        <li><a href="change.jsp">개인정보 변경</a></li>
-		                        <li><a href="logoutAction.jsp">로그아웃</a></li>
-		                    </ul>
-						</li>
-					</ul>
-			<%
-				}
-			%>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">마이페이지<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+                        <li><a href="rent.jsp">대여이력 조회</a></li>
+                        <li><a href="return.jsp">반납이력 조회</a></li>
+                        <li><a href="change.jsp">개인정보 변경</a></li>
+                        <li><a href="logoutAction.jsp">로그아웃</a></li>
+                    </ul>
+				</li>
+			</ul>
 		</div>
 	</nav>
 	<div class="container">
@@ -86,13 +76,16 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td style="width:20%; vertical-align:middle;">물품명</td>
 							<td><input type="text" class="form-control" placeholder="물품명" name="productName" maxlength="20"></td>
 						</tr>
 						<tr>
-							<td><input type="number" class="form-control" placeholder="수량" name="productCount"></td>
+							<td style="vertical-align:middle;">수량</td>
+							<td><input type="number" class="form-control" placeholder="수량" name="productCount" max="10000"></td>
 						</tr>
 						<tr>
-							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit"></td>
+							<td style="vertical-align:middle;">보증금</td>
+							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit" max="1000000"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -22,6 +22,17 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
+		if (!adminAvailable) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
 		int productID = 0;
 		if (request.getParameter("productID") != null) {
 			productID = Integer.parseInt(request.getParameter("productID"));
@@ -33,39 +44,30 @@
 			script.println("location.href='board.jsp'");
 			script.println("</script>");
 		}
-		Product product = new ProductDAO().getProduct(productID);
-		if (!(Boolean)session.getAttribute("adminAvailable")) {
+		if (request.getParameter("productName") == null || request.getParameter("productCount") == null ||
+			request.getParameter("productDeposit") == null || request.getParameter("rentAvailable") == null) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='board.jsp'");
+			script.println("alert('입력이 안 된 사항이 있습니다.')");
+			script.println("history.back()");
 			script.println("</script>");
 		}
 		else {
-			if (request.getParameter("productName") == null || request.getParameter("productCount") == null || request.getParameter("productDeposit") == null) {
+			ProductDAO productDAO = new ProductDAO();
+			int result = productDAO.update(productID, request.getParameter("productName"), Integer.parseInt(request.getParameter("productCount")),
+			Integer.parseInt(request.getParameter("productDeposit")), Boolean.parseBoolean(request.getParameter("rentAvailable")));
+			if (result > -1) { // 물품 수정 성공
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('입력이 안 된 사항이 있습니다.')");
-				script.println("history.back()");
+				script.println("location.href='board.jsp'");
 				script.println("</script>");
 			}
-			else {
-				ProductDAO productDAO = new ProductDAO();
-				int result = productDAO.update(productID, request.getParameter("productName"),
-				Integer.parseInt(request.getParameter("productCount")), Integer.parseInt(request.getParameter("productDeposit")));
-				if (result > -1) { // 물품 수정 성공
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("location.href='board.jsp'");
-					script.println("</script>");
-				}
-				else { // 데이터베이스 오류
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('물품 수정에 실패했습니다.')");
-					script.println("history.back()");
-					script.println("</script>");
-				}
+			else { // 데이터베이스 오류
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('물품 수정에 실패했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
 			}
 		}
 	%>

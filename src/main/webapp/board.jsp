@@ -24,6 +24,10 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String)session.getAttribute("userID");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
 		int pageNumber = 1;
 		if (request.getParameter("pageNumber") != null) {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
@@ -96,23 +100,23 @@
 				<tbody>
 					<%
 						ProductDAO productDAO = new ProductDAO();
-						ArrayList<Product> list = productDAO.getList(pageNumber);
+						ArrayList<Product> list = productDAO.getList(pageNumber, adminAvailable);
 						for (int i = 0; i < list.size(); i++) {
 					%>
 							<tr>
-								<td><%= list.get(i).getProductID()%></td>
-								<td><a href="view.jsp?productID=<%= list.get(i).getProductID()%>"><%= list.get(i).getProductName()%></a></td>
-								<td><%= list.get(i).getProductCount()%></td>
-								<td><%= list.get(i).getProductDeposit()%></td>
+								<td style="width:15%; vertical-align:middle;"><%= list.get(i).getProductID()%></td>
+								<td style="width:35%; vertical-align:middle;"><a href="view.jsp?productID=<%= list.get(i).getProductID()%>"><%= list.get(i).getProductName()%></a></td>
+								<td style="width:15%; vertical-align:middle;"><%= list.get(i).getProductCount()%></td>
+								<td style="width:15%; vertical-align:middle;"><%= list.get(i).getProductDeposit()%></td>
 								<%
 									if (list.get(i).getRentAvailable()) {
 								%>
-										<td>대여 가능</td>
+										<td style="width:20%; vertical-align:middle;">대여 가능</td>
 								<%
 									}
 									else {
 								%>
-										<td>대여 불가능</td>
+										<td style="width:20%; vertical-align:middle;">대여 불가능</td>
 								<%
 									}
 								%>
@@ -128,7 +132,7 @@
 					<a href="board.jsp?pageNumber=<%= pageNumber - 1%>" class="btn btn-success">이전</a>
 			<%
 				}
-				if (productDAO.isExistPage(pageNumber + 1)) {
+				if (productDAO.isExistPage(pageNumber + 1, adminAvailable)) {
 			%>
 					<a href="board.jsp?pageNumber=<%= pageNumber + 1%>" class="btn btn-success">다음</a>
 			<%

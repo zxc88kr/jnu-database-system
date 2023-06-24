@@ -17,6 +17,10 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String)session.getAttribute("userID");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
 		int productID = 0;
 		if (request.getParameter("productID") != null) {
 			productID = Integer.parseInt(request.getParameter("productID"));
@@ -87,35 +91,46 @@
 			<table class="table table-striped" style="text-align:center; border:1px solid #dddddd;">
 				<thead>
 					<tr>
-						<th colspan="3" style="background-color:#eeeeee; text-align:center;">물품 정보</th>
+						<th colspan="2" style="background-color:#eeeeee; text-align:center;">물품 정보</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td style="width: 20%;">물품번호</td>
-						<td colspan="2"><%= product.getProductID()%></td>
+						<td style="width:20%; vertical-align:middle;">물품번호</td>
+						<td><%= product.getProductID()%></td>
 					</tr>
 					<tr>
-						<td>물품명</td>
-						<td colspan="2"><%= product.getProductName()%></td>
+						<td style="vertical-align:middle;">물품명</td>
+						<td><%= product.getProductName()%></td>
 					</tr>
 					<tr>
-						<td>수량</td>
-						<td colspan="2"><%= product.getProductCount()%></td>
+						<td style="vertical-align:middle;">수량</td>
+						<td><%= product.getProductCount()%></td>
 					</tr>
 					<tr>
-						<td>보증금</td>
-						<td colspan="2"><%= product.getProductDeposit()%></td>
+						<td style="vertical-align:middle;">보증금</td>
+						<td><%= product.getProductDeposit()%></td>
 					</tr>
 					<tr>
-						<td>상태</td>
-						<td colspan="2"><%= product.getRentAvailable()%></td>
+						<td style="vertical-align:middle;">상태</td>
+						<%
+							if (product.getRentAvailable()) {
+						%>
+								<td>대여 가능</td>
+						<%
+							}
+							else {
+						%>
+								<td>대여 불가능</td>
+						<%
+							}
+						%>
 					</tr>
 				</tbody>
 			</table>
 			<a href="board.jsp" class="btn btn-primary">목록</a>
 			<%
-				if (userID != null && (Boolean)session.getAttribute("adminAvailable")) {
+				if (userID != null && adminAvailable) {
 			%>
 					<a href="update.jsp?productID=<%= productID%>" class="btn btn-primary">수정</a>
 					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?productID=<%= productID%>" class="btn btn-primary">삭제</a>

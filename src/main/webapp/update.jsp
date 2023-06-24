@@ -24,6 +24,17 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
+		if (!adminAvailable) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
 		int productID = 0;
 		if (request.getParameter("productID") != null) {
 			productID = Integer.parseInt(request.getParameter("productID"));
@@ -36,13 +47,6 @@
 			script.println("</script>");
 		}
 		Product product = new ProductDAO().getProduct(productID);
-		if (!(Boolean)session.getAttribute("adminAvailable")) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('권한이 없습니다.')");
-			script.println("location.href='board.jsp'");
-			script.println("</script>");
-		}
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">
@@ -86,13 +90,31 @@
 					</thead>
 					<tbody>
 						<tr>
+							<td style="width:20%; vertical-align:middle;">물품명</td>
 							<td><input type="text" class="form-control" placeholder="물품명" name="productName" maxlength="20" value="<%= product.getProductName()%>"></td>
 						</tr>
 						<tr>
-							<td><input type="number" class="form-control" placeholder="수량" name="productCount" value="<%= product.getProductCount()%>"></td>
+							<td style="vertical-align:middle;">수량</td>
+							<td><input type="number" class="form-control" placeholder="수량" name="productCount" max="10000" value="<%= product.getProductCount()%>"></td>
 						</tr>
 						<tr>
-							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit" value="<%= product.getProductDeposit()%>"></td>
+							<td style="vertical-align:middle;">보증금</td>
+							<td><input type="number" class="form-control" placeholder="보증금" name="productDeposit" max="1000000" value="<%= product.getProductDeposit()%>"></td>
+						</tr>
+						<tr>
+							<td style="vertical-align:middle;">상태</td>
+							<td>
+								<div class="form-group" style="margin-bottom:0px;">
+			                        <div class="btn-group btn-group-justified" data-toggle="buttons">
+			                        	<label class="btn btn-primary <%= product.getRentAvailable()?"active":""%>">
+			                        		<input type="radio" name="rentAvailable" autocomplete="off" value="true" <%= product.getRentAvailable()?"checked":""%>>대여 가능
+			                        	</label>
+			                        	<label class="btn btn-primary <%= product.getRentAvailable()?"":"active"%>">
+			                        		<input type="radio" name="rentAvailable" autocomplete="off" value="false" <%= product.getRentAvailable()?"":"checked"%>>대여 불가능
+			                        	</label>
+			                        </div>
+			                    </div>
+							</td>
 						</tr>
 					</tbody>
 				</table>

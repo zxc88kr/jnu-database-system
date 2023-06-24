@@ -25,30 +25,39 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
+		if (!adminAvailable) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('권한이 없습니다.')");
+			script.println("location.href='board.jsp'");
+			script.println("</script>");
+		}
+		if (product.getProductName() == null || product.getProductCount() == 0 || product.getProductDeposit() == 0) {
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('입력이 안 된 사항이 있습니다.')");
+			script.println("history.back()");
+			script.println("</script>");
+		}
 		else {
-			if (product.getProductName() == null || (Integer)product.getProductCount() == null || (Integer)product.getProductDeposit() == null) {
+			ProductDAO productDAO = new ProductDAO();
+			int result = productDAO.write(product.getProductName(), product.getProductCount(), product.getProductDeposit());
+			if (result > -1) { // 물품 추가 성공
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('입력이 안 된 사항이 있습니다.')");
-				script.println("history.back()");
+				script.println("location.href='board.jsp'");
 				script.println("</script>");
 			}
-			else {
-				ProductDAO productDAO = new ProductDAO();
-				int result = productDAO.write(product.getProductName(), product.getProductCount(), product.getProductDeposit());
-				if (result > -1) { // 물품 추가 성공
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("location.href='board.jsp'");
-					script.println("</script>");
-				}
-				else { // 데이터베이스 오류
-					PrintWriter script = response.getWriter();
-					script.println("<script>");
-					script.println("alert('물품 추가에 실패했습니다.')");
-					script.println("history.back()");
-					script.println("</script>");
-				}
+			else { // 데이터베이스 오류
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('물품 추가에 실패했습니다.')");
+				script.println("history.back()");
+				script.println("</script>");
 			}
 		}
 	%>

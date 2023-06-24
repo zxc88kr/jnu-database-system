@@ -23,6 +23,10 @@
 		if (session.getAttribute("userID") != null) {
 			userID = (String)session.getAttribute("userID");
 		}
+		Boolean adminAvailable = false;
+		if (session.getAttribute("adminAvailable") != null) {
+			adminAvailable = (Boolean)session.getAttribute("adminAvailable");
+		}
 	%>
 	<nav class="navbar navbar-default">
 		<div class="navbar-header">

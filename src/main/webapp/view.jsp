@@ -145,7 +145,8 @@
 				}
 				if (!adminAvailable) {
 			%>
-			<a href="rent.jsp?productID=<%= productID%>" class="btn btn-primary pull-right">대여</a>
+					<a onclick="return confirm('대여하시겠습니까?')" href="rentAction.jsp? userID=<%= product.getProductID()%>&
+					productName=<%= product.getProductName()%>&productDeposit=<%= product.getProductDeposit()%>" class="btn btn-primary pull-right">대여</a>
 			<%
 				}
 			%>

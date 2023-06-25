@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class ReturnedDAO {
 	private Connection conn;
@@ -46,37 +45,6 @@ public class ReturnedDAO {
 				return rs.getInt(1) + 1; // 질의 성공
 			}
 			return 1; // 첫 번째 물품
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1; // 데이터베이스 오류
-	}
-	
-	public int rentUpdate(int productID) {
-		String SQL = "UPDATE Product SET productCount = productCount - 1 WHERE productID = ?";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, productID);
-			return pstmt.executeUpdate(); // 물품 수량 업데이트 성공
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1; // 데이터베이스 오류
-	}
-	
-	public int rent(String userID, int productID, String productName, int productDeposit) {
-		String SQL = "INSERT INTO Rent VALUES (?, ?, ?, ?, ?, ?, ?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
-			pstmt.setString(2, userID);
-			pstmt.setInt(3, productID);
-			pstmt.setString(4, productName);
-			pstmt.setDate(5, getDate());
-			pstmt.setDate(6, new Date(getDate().getTime() + 1000 * 60 * 60 * 24 * 7));
-			pstmt.setInt(7, productDeposit);
-			pstmt.executeUpdate();
-			return rentUpdate(productID); // 물품 대여 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -129,5 +97,36 @@ public class ReturnedDAO {
 			e.printStackTrace();
 		}
 		return false; // 데이터베이스 오류
+	}
+	
+	public int rentUpdate(int productID) {
+		String SQL = "UPDATE Product SET productCount = productCount - 1 WHERE productID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, productID);
+			return pstmt.executeUpdate(); // 물품 수량 업데이트 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
+	public int returns(String userID, int productID, String productName, int productDeposit) {
+		String SQL = "INSERT INTO Rent VALUES (?, ?, ?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext());
+			pstmt.setString(2, userID);
+			pstmt.setInt(3, productID);
+			pstmt.setString(4, productName);
+			pstmt.setDate(5, getDate());
+			pstmt.setDate(6, new Date(getDate().getTime() + 1000 * 60 * 60 * 24 * 7));
+			pstmt.setInt(7, productDeposit);
+			pstmt.executeUpdate();
+			return rentUpdate(productID); // 물품 대여 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
 	}
 }

@@ -52,35 +52,27 @@ public class RentDAO {
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int rentUpdate(int productID) {
-		String SQL = "UPDATE Product SET productCount = productCount - 1 WHERE productID = ?";
+	public Rent getRent(int productID) {
+		String SQL = "SELECT * FROM Rent WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, productID);
-			return pstmt.executeUpdate(); // 물품 수량 업데이트 성공
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				Rent rent = new Rent();
+				rent.setRentID(rs.getInt(1));
+				rent.setUserID(rs.getString(2));
+				rent.setProductID(rs.getInt(3));
+				rent.setProductName(rs.getString(4));
+				rent.setRentDate(rs.getDate(5));
+				rent.setRentExpr(rs.getDate(6));
+				rent.setProductDeposit(rs.getInt(7));
+				return rent; // 대여 가져오기 성공
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return -1; // 데이터베이스 오류
-	}
-	
-	public int rent(String userID, int productID, String productName, int productDeposit) {
-		String SQL = "INSERT INTO Rent VALUES (?, ?, ?, ?, ?, ?, ?)";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getNext());
-			pstmt.setString(2, userID);
-			pstmt.setInt(3, productID);
-			pstmt.setString(4, productName);
-			pstmt.setDate(5, getDate());
-			pstmt.setDate(6, new Date(getDate().getTime() + 1000 * 60 * 60 * 24 * 7));
-			pstmt.setInt(7, productDeposit);
-			pstmt.executeUpdate();
-			return rentUpdate(productID); // 물품 대여 성공
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1; // 데이터베이스 오류
+		return null; // 데이터베이스 오류
 	}
 	
 	public ArrayList<Rent> getList(int pageNumber, Boolean adminAvailable, String userID) {
@@ -129,5 +121,36 @@ public class RentDAO {
 			e.printStackTrace();
 		}
 		return false; // 데이터베이스 오류
+	}
+	
+	public int rentUpdate(int productID) {
+		String SQL = "UPDATE Product SET productCount = productCount - 1 WHERE productID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, productID);
+			return pstmt.executeUpdate(); // 물품 수량 업데이트 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+	
+	public int rent(String userID, int productID, String productName, int productDeposit) {
+		String SQL = "INSERT INTO Rent VALUES (?, ?, ?, ?, ?, ?, ?)";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, getNext());
+			pstmt.setString(2, userID);
+			pstmt.setInt(3, productID);
+			pstmt.setString(4, productName);
+			pstmt.setDate(5, getDate());
+			pstmt.setDate(6, new Date(getDate().getTime() + 1000 * 60 * 60 * 24 * 7));
+			pstmt.setInt(7, productDeposit);
+			pstmt.executeUpdate();
+			return rentUpdate(productID); // 물품 대여 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
 	}
 }

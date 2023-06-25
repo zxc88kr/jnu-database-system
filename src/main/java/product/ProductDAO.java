@@ -61,7 +61,7 @@ public class ProductDAO {
 	public ArrayList<Product> getList(int pageNumber, Boolean adminAvailable) {
 		String SQL = "SELECT * FROM Product WHERE rentAvailable = true ORDER BY productID DESC LIMIT 10 OFFSET ?";
 		if (adminAvailable) {
-			SQL = "SELECT * FROM Product ORDER BY productID DESC LIMIT 10 OFFSET ?";
+			SQL = "SELECT * FROM Product WHERE productDeposit != -9999 ORDER BY productID DESC LIMIT 10 OFFSET ?";
 		}
 		ArrayList<Product> list = new ArrayList<Product>();
 		try {
@@ -87,7 +87,7 @@ public class ProductDAO {
 	public boolean isExistPage(int pageNumber, Boolean adminAvailable) {
 		String SQL = "SELECT * FROM Product WHERE rentAvailable = true LIMIT 10 OFFSET ?";
 		if (adminAvailable) {
-			SQL = "SELECT * FROM Product LIMIT 10 OFFSET ?";
+			SQL = "SELECT * FROM Product WHERE productDeposit != -9999 LIMIT 10 OFFSET ?";
 		}
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -135,7 +135,7 @@ public class ProductDAO {
 	}
 	
 	public int delete(int productID) {
-		String SQL = "DELETE FROM Product WHERE productID = ?";
+		String SQL = "UPDATE Product SET productName = '', productCount = 0, productDeposit = -9999, rentAvailable = false WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, productID);

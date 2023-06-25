@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="rent.RentDAO"%>
+<%@ page import="returned.ReturnedDAO"%>
 <%@ page import="product.Product"%>
 <%@ page import="product.ProductDAO"%>
 <%@ page import="java.io.PrintWriter"%>
@@ -30,8 +30,8 @@
 		if (adminAvailable) {
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('관리자는 대여할 수 없습니다.')");
-			script.println("location.href='board.jsp'");
+			script.println("alert('관리자는 반납할 수 없습니다.')");
+			script.println("location.href='rent.jsp'");
 			script.println("</script>");
 		}
 		int productID = 0;
@@ -42,31 +42,23 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('존재하지 않는 물품입니다.')");
-			script.println("location.href='board.jsp'");
+			script.println("location.href='rent.jsp'");
 			script.println("</script>");
 		}
+		returnID			INT,
+		userID				VARCHAR(20),
+	    productID			INT,
+		productName			VARCHAR(20),
+	    rentDate			DATE,
+	    returnDate			DATE,
 		Product product = new ProductDAO().getProduct(productID);
-		if (!product.getRentAvailable()) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('대여 불가능한 물품입니다.')");
-			script.println("location.href='board.jsp'");
-			script.println("</script>");
-		}
-		if (product.getProductCount() <= 0) {
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('수량이 부족합니다.')");
-			script.println("location.href='board.jsp'");
-			script.println("</script>");
-		}
-		RentDAO rentDAO = new RentDAO();
+		ReturnedDAO returnedDAO = new ReturnedDAO();
 		if (userID != null) {
-			int result = rentDAO.rent(userID, productID, product.getProductName(), product.getProductDeposit());
-			if (result > -1) { // 물품 대여 성공
+			int result = returnedDAO.returns(userID, productID, product.getProductName(), product.getProductDeposit());
+			if (result > -1) { // 물품 반납 성공
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('대여에 성공했습니다. 대여 기간은 7일입니다.')");
+				script.println("alert('반납에 성공했습니다. 감사합니다.')");
 				script.println("location.href='board.jsp'");
 				script.println("</script>");
 			}

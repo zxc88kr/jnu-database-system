@@ -149,7 +149,7 @@
 				}
 				if (adminAvailable) {
 			%>
-					<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
+					<a href="write.jsp" class="btn btn-primary pull-right">추가</a>
 			<%
 				}
 			%>

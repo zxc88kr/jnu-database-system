@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Rent {
 	private int rentID;
 	private String userID;
+	private int productID;
 	private String productName;
 	private Date rentDate;
 	private Date rentExpr;
@@ -21,6 +22,12 @@ public class Rent {
 	}
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+	public int getProductID() {
+		return productID;
+	}
+	public void setProductID(int productID) {
+		this.productID = productID;
 	}
 	public String getProductName() {
 		return productName;

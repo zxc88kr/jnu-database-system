@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="returned.ReturnedDAO"%>
-<%@ page import="product.Product"%>
-<%@ page import="product.ProductDAO"%>
+<%@ page import="rent.Rent"%>
+<%@ page import="rent.RentDAO"%>
 <%@ page import="java.io.PrintWriter"%>
 <% request.setCharacterEncoding("UTF-8");%>
 <!DOCTYPE html>
@@ -45,21 +45,15 @@
 			script.println("location.href='rent.jsp'");
 			script.println("</script>");
 		}
-		returnID			INT,
-		userID				VARCHAR(20),
-	    productID			INT,
-		productName			VARCHAR(20),
-	    rentDate			DATE,
-	    returnDate			DATE,
-		Product product = new ProductDAO().getProduct(productID);
+		Rent rent = new RentDAO().getRent(productID);
 		ReturnedDAO returnedDAO = new ReturnedDAO();
 		if (userID != null) {
-			int result = returnedDAO.returns(userID, productID, product.getProductName(), product.getProductDeposit());
+			int result = returnedDAO.returns(userID, productID, rent.getProductName(), rent.getRentDate());
 			if (result > -1) { // 물품 반납 성공
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('반납에 성공했습니다. 감사합니다.')");
-				script.println("location.href='board.jsp'");
+				script.println("location.href='rent.jsp'");
 				script.println("</script>");
 			}
 			else { // 데이터베이스 오류

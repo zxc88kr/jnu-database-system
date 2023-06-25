@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class ReturnedDAO {
 	private Connection conn;
@@ -37,7 +38,7 @@ public class ReturnedDAO {
 	}
 	
 	public int getNext() {
-		String SQL = "SELECT rentID FROM Rent ORDER BY rentID DESC";
+		String SQL = "SELECT returnID FROM Returned ORDER BY returnID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -52,9 +53,9 @@ public class ReturnedDAO {
 	}
 	
 	public ArrayList<Returned> getList(int pageNumber, Boolean adminAvailable, String userID) {
-		String SQL = "SELECT * FROM Rent WHERE userID = ? ORDER BY rentID DESC LIMIT 10 OFFSET ?";
+		String SQL = "SELECT * FROM Returned WHERE userID = ? ORDER BY returnID DESC LIMIT 10 OFFSET ?";
 		if (adminAvailable) {
-			SQL = "SELECT * FROM Rent ORDER BY rentID DESC LIMIT 10 OFFSET ?";
+			SQL = "SELECT * FROM Returned ORDER BY returnID DESC LIMIT 10 OFFSET ?";
 		}
 		ArrayList<Returned> list = new ArrayList<Returned>();
 		try {
@@ -64,16 +65,15 @@ public class ReturnedDAO {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Returned rent = new Returned();
-				rent.setRentID(rs.getInt(1));
+				rent.setReturnID(rs.getInt(1));
 				rent.setUserID(rs.getString(2));
 				rent.setProductID(rs.getInt(3));
 				rent.setProductName(rs.getString(4));
 				rent.setRentDate(rs.getDate(5));
-				rent.setRentExpr(rs.getDate(6));
-				rent.setProductDeposit(rs.getInt(7));
+				rent.setReturnDate(rs.getDate(6));
 				list.add(rent);
 			}
-			return list; // 대여목록 가져오기 성공
+			return list; // 대출목록 가져오기 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -100,30 +100,42 @@ public class ReturnedDAO {
 	}
 	
 	public int rentUpdate(int productID) {
-		String SQL = "UPDATE Product SET productCount = productCount - 1 WHERE productID = ?";
+		String SQL = "DELETE FROM Rent WHERE productID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, productID);
-			return pstmt.executeUpdate(); // 물품 수량 업데이트 성공
+			return pstmt.executeUpdate(); // 물품 삭제 성공
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1; // 데이터베이스 오류
+	}
+
+	public int returnsUpdate(int productID) {
+		String SQL = "UPDATE Product SET productCount = productCount + 1 WHERE productID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, productID);
+			pstmt.executeUpdate(); // 물품 수량 업데이트 성공
+			return rentUpdate(productID); // 대여 정보 업데이트 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1; // 데이터베이스 오류
 	}
 	
-	public int returns(String userID, int productID, String productName, int productDeposit) {
-		String SQL = "INSERT INTO Rent VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public int returns(String userID, int productID, String productName, Date rentDate) {
+		String SQL = "INSERT INTO Returned VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
 			pstmt.setString(2, userID);
 			pstmt.setInt(3, productID);
 			pstmt.setString(4, productName);
-			pstmt.setDate(5, getDate());
-			pstmt.setDate(6, new Date(getDate().getTime() + 1000 * 60 * 60 * 24 * 7));
-			pstmt.setInt(7, productDeposit);
+			pstmt.setDate(5, rentDate);
+			pstmt.setDate(6, getDate());
 			pstmt.executeUpdate();
-			return rentUpdate(productID); // 물품 대여 성공
+			return returnsUpdate(productID); // 물품 반납 성공
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

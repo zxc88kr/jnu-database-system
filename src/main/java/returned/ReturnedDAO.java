@@ -60,8 +60,13 @@ public class ReturnedDAO {
 		ArrayList<Returned> list = new ArrayList<Returned>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);
-			pstmt.setInt(2, (pageNumber - 1) * 10);
+			if (adminAvailable) {
+				pstmt.setInt(1, (pageNumber - 1) * 10);
+			}
+			else {
+				pstmt.setString(1, userID);
+				pstmt.setInt(2, (pageNumber - 1) * 10);
+			}
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				Returned rent = new Returned();
@@ -87,8 +92,13 @@ public class ReturnedDAO {
 		}
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1, userID);
-			pstmt.setInt(2, (pageNumber - 1) * 10);
+			if (adminAvailable) {
+				pstmt.setInt(1, (pageNumber - 1) * 10);
+			}
+			else {
+				pstmt.setString(1, userID);
+				pstmt.setInt(2, (pageNumber - 1) * 10);
+			}
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return true; // 페이지 존재

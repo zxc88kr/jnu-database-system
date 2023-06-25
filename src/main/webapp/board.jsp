@@ -77,7 +77,7 @@
 							aria-expanded="false">마이페이지<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 		                        <li><a href="rent.jsp">대여이력 조회</a></li>
-		                        <li><a href="returned.jsp">반납이력 조회</a></li>
+		                        <li><a href="return.jsp">반납이력 조회</a></li>
 		                        <li><a href="change.jsp">개인정보 변경</a></li>
 		                        <%
 		                        	if (adminAvailable) {

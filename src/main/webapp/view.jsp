@@ -104,7 +104,7 @@
 				<tbody>
 					<tr>
 						<td style="width:20%; vertical-align:middle;">물품번호</td>
-						<td><%= product.getProductID()%></td>
+						<td><%= productID%></td>
 					</tr>
 					<tr>
 						<td style="vertical-align:middle;">물품명</td>
@@ -143,10 +143,9 @@
 					<a href="update.jsp?productID=<%= productID%>" class="btn btn-primary pull-right">수정</a>
 			<%
 				}
-				if (!adminAvailable) {
+				if (product.getProductCount() > 0 && !adminAvailable) {
 			%>
-					<a onclick="return confirm('대여하시겠습니까?')" href="rentAction.jsp? userID=<%= product.getProductID()%>&
-					productName=<%= product.getProductName()%>&productDeposit=<%= product.getProductDeposit()%>" class="btn btn-primary pull-right">대여</a>
+					<a onclick="return confirm('대여하시겠습니까?')" href="rentAction.jsp?productID=<%= productID%>" class="btn btn-primary pull-right">대여</a>
 			<%
 				}
 			%>

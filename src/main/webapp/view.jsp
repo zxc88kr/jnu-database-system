@@ -139,8 +139,13 @@
 			<%
 				if (userID != null && adminAvailable) {
 			%>
-					<a href="update.jsp?productID=<%= productID%>" class="btn btn-primary">수정</a>
-					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?productID=<%= productID%>" class="btn btn-primary">삭제</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?productID=<%= productID%>" class="btn btn-primary pull-right" style="margin-left:4px;">삭제</a>
+					<a href="update.jsp?productID=<%= productID%>" class="btn btn-primary pull-right">수정</a>
+			<%
+				}
+				if (!adminAvailable) {
+			%>
+			<a href="rent.jsp?productID=<%= productID%>" class="btn btn-primary pull-right">대여</a>
 			<%
 				}
 			%>

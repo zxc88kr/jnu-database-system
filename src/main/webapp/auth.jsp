@@ -132,7 +132,7 @@
 				</tbody>
 			</table>
 			<a href="main.jsp" class="btn btn-primary">메인</a>
-			<a href="addAuth.jsp?target=manager" class="btn btn-primary pull-right">관리자 추가</a>
+			<a href="addAuth.jsp?target=manager" class="btn btn-primary pull-right" style="margin-left:4px;">관리자 추가</a>
 			<a href="addAuth.jsp?target=student" class="btn btn-primary pull-right">학생 추가</a>
 		</div>
 	</div>
